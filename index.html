@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Formulario Cierre de Circuito</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<h2>Formulario Cierre de Circuito - Saniprof</h2>
+
+<form id="formulario">
+
+<label>Cierre de Circuito</label>
+<select name="cierre" required>
+<option value="">Seleccionar</option>
+<option>Completado</option>
+<option>Incompleto</option>
+<option>En proceso</option>
+</select>
+
+<label>Horario</label>
+<select name="horario" required>
+<option value="">Seleccionar</option>
+<option>Matutino</option>
+<option>Vespertino</option>
+<option>Nocturno</option>
+</select>
+
+<label>Nombre del trabajador Saniprof</label>
+<input type="text" name="trabajador" required>
+
+<h3>Insumos Dejados</h3>
+
+<label><input type="checkbox" name="insumos[]" value="Papel de baño"> Papel de baño</label>
+<label><input type="checkbox" name="insumos[]" value="Jabón"> Jabón</label>
+<label><input type="checkbox" name="insumos[]" value="Gel antibacterial"> Gel antibacterial</label>
+
+<h3>Observaciones</h3>
+
+<textarea name="observaciones"></textarea>
+
+<h3>Subir Foto</h3>
+
+<input type="file" id="foto" name="foto" accept="image/*">
+
+<button type="submit">Enviar</button>
+
+</form>
+
+<script src="script.js"></script>
+
+</body>
+</html>
