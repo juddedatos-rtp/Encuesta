@@ -4,36 +4,53 @@ document.getElementById("formulario").addEventListener("submit", async function(
   e.preventDefault();
 
   let form = e.target;
-  let formData = new FormData(form);
+
+  // Obtener insumos (checkbox)
+  let insumosSeleccionados = [];
+  document.querySelectorAll('input[name="insumos"]:checked').forEach(el => {
+    insumosSeleccionados.push(el.value);
+  });
+
   let file = document.getElementById("foto").files[0];
+  let fotoBase64 = "";
+
+  if(file){
+    fotoBase64 = await convertirBase64(file);
+  }
+
+  let datos = {
+    cierre: form.cierre.value,
+    horario: form.horario.value,
+    trabajador: form.trabajador.value,
+    insumos: insumosSeleccionados.join(", "),
+    observaciones: form.observaciones.value,
+    foto: fotoBase64
+  };
 
   try{
-    if(file){
-      let reader = new FileReader();
-      reader.onload = async function(){
-        formData.append("foto", reader.result);
+    await fetch(scriptURL, {
+      method: "POST",
+      body: JSON.stringify(datos),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    });
 
-        await fetch(scriptURL, {
-          method:"POST",
-          body:formData
-        });
+    alert("Formulario enviado correctamente");
+    form.reset();
 
-        alert("Formulario enviado correctamente");
-        form.reset();
-      };
-      reader.readAsDataURL(file);
-    } else {
-      await fetch(scriptURL, {
-        method: "POST",
-        body: formData,
-        mode: "no-cors"
-        });
-
-      alert("Formulario enviado correctamente");
-      form.reset();
-    }
   } catch(error){
-    console.error("Error:", error);
-    alert("Error al enviar el formulario");
+    console.error(error);
+    alert("Error real al enviar");
   }
 });
+
+// Convertir imagen a base64
+function convertirBase64(file){
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+  });
+}
