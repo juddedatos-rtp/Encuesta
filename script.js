@@ -12,32 +12,36 @@ document.getElementById("formulario").addEventListener("submit", function(e){
 
   let file = document.getElementById("foto").files[0];
 
-  let formData = new FormData();
-  formData.append("cierre", form.cierre.value);
-  formData.append("horario", form.horario.value);
-  formData.append("trabajador", form.trabajador.value);
-  formData.append("insumos", insumos.join(", "));
-  formData.append("observaciones", form.observaciones.value);
-
   if(file){
     let reader = new FileReader();
     reader.onload = function(){
-      formData.append("foto", reader.result);
-      enviar(formData);
+      enviarDatos(form, insumos, reader.result);
     };
     reader.readAsDataURL(file);
   } else {
-    enviar(formData);
+    enviarDatos(form, insumos, "");
   }
 });
 
-function enviar(formData){
+function enviarDatos(form, insumos, foto){
+
+  const datos = new URLSearchParams();
+
+  datos.append("cierre", form.cierre.value);
+  datos.append("horario", form.horario.value);
+  datos.append("trabajador", form.trabajador.value);
+  datos.append("insumos", insumos.join(", "));
+  datos.append("observaciones", form.observaciones.value);
+  datos.append("foto", foto);
+
   fetch(scriptURL, {
     method: "POST",
-    body: formData,
-    mode: "no-cors" // 🔥 CLAVE
+    body: datos,
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded"
+    }
   });
 
   alert("Formulario enviado correctamente");
-  document.getElementById("formulario").reset();
+  form.reset();
 }
