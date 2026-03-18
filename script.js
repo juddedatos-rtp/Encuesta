@@ -1,56 +1,43 @@
-const scriptURL = "https://script.google.com/macros/s/AKfycbzNOQVYdrA965aW8pQwGaMElraVXDVeNPiGRsMJuxF-XH_GCZWWMuqMPL9PbMGyMnZkVg/exec";
+const scriptURL = "https://script.google.com/macros/s/AKfycbxSiRIHKbxmWAHG-gYQJ2Vb_ZxaNV_iy0QCVkgYweo1oUMpx_u-04uMosRv4mvLZkwFWQ/exec";
 
-document.getElementById("formulario").addEventListener("submit", async function(e){
+document.getElementById("formulario").addEventListener("submit", function(e){
   e.preventDefault();
 
   let form = e.target;
 
-  // Obtener insumos (checkbox)
-  let insumosSeleccionados = [];
-  document.querySelectorAll('input[name="insumos"]:checked').forEach(el => {
-    insumosSeleccionados.push(el.value);
+  let insumos = [];
+  document.querySelectorAll('input[name="insumos"]:checked').forEach(el=>{
+    insumos.push(el.value);
   });
 
   let file = document.getElementById("foto").files[0];
-  let fotoBase64 = "";
+
+  let formData = new FormData();
+  formData.append("cierre", form.cierre.value);
+  formData.append("horario", form.horario.value);
+  formData.append("trabajador", form.trabajador.value);
+  formData.append("insumos", insumos.join(", "));
+  formData.append("observaciones", form.observaciones.value);
 
   if(file){
-    fotoBase64 = await convertirBase64(file);
-  }
-
-  let datos = {
-    cierre: form.cierre.value,
-    horario: form.horario.value,
-    trabajador: form.trabajador.value,
-    insumos: insumosSeleccionados.join(", "),
-    observaciones: form.observaciones.value,
-    foto: fotoBase64
-  };
-
-  try{
-    await fetch(scriptURL, {
-      method: "POST",
-      body: JSON.stringify(datos),
-      headers: {
-        "Content-Type": "application/json"
-      }
-    });
-
-    alert("Formulario enviado correctamente");
-    form.reset();
-
-  } catch(error){
-    console.error(error);
-    alert("Error real al enviar");
+    let reader = new FileReader();
+    reader.onload = function(){
+      formData.append("foto", reader.result);
+      enviar(formData);
+    };
+    reader.readAsDataURL(file);
+  } else {
+    enviar(formData);
   }
 });
 
-// Convertir imagen a base64
-function convertirBase64(file){
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = error => reject(error);
+function enviar(formData){
+  fetch(scriptURL, {
+    method: "POST",
+    body: formData,
+    mode: "no-cors" // 🔥 CLAVE
   });
+
+  alert("Formulario enviado correctamente");
+  document.getElementById("formulario").reset();
 }
