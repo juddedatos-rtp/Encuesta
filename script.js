@@ -1,4 +1,4 @@
-const scriptURL = "https://script.google.com/macros/s/AKfycbxSiRIHKbxmWAHG-gYQJ2Vb_ZxaNV_iy0QCVkgYweo1oUMpx_u-04uMosRv4mvLZkwFWQ/exec";
+const scriptURL = "https://script.google.com/macros/s/AKfycbzNOQVYdrA965aW8pQwGaMElraVXDVeNPiGRsMJuxF-XH_GCZWWMuqMPL9PbMGyMnZkVg/exec";
 
 document.getElementById("formulario").addEventListener("submit", async function(e){
   e.preventDefault();
