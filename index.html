@@ -92,28 +92,24 @@ button{
 
 <h2>🚍 Cierre de Circuito</h2>
 
-<form 
-action="https://docs.google.com/forms/d/e/1FAIpQLSeXetqFhJncAIbs4fgoo1uZqz88nVw-VsCSN0fah9bBCwIQOw/formResponse"
-method="POST"
-target="hidden_iframe"
-onsubmit="enviado=true;">
+<form id="miFormulario">
 
 <div class="section-title">Datos Generales</div>
 
 <label>Cierre de Circuito</label>
 <select name="entry.2037866813" required>
   <option value="">Seleccionar</option>
-  <option>Hidalgo</option>
-  <option>Reclusorio Norte</option>
-  <option>El Charco</option>
+  <option value="Hidalgo">Hidalgo</option>
+  <option value="Reclusorio Norte">Reclusorio Norte</option>
+  <option value="El Charco">El Charco</option>
 </select>
 
 <label>Horario</label>
 <select name="entry.1566385644" required>
   <option value="">Seleccionar</option>
-  <option>Matutino</option>
-  <option>Vespertino</option>
-  <option>Nocturno</option>
+  <option value="Matutino">Matutino</option>
+  <option value="Vespertino">Vespertino</option>
+  <option value="Nocturno">Nocturno</option>
 </select>
 
 <label>Trabajador</label>
@@ -122,10 +118,9 @@ onsubmit="enviado=true;">
 <div class="section-title">Insumos</div>
 
 <div class="checkbox-grid">
-  <!-- 🔥 IMPORTANTE: cada checkbox debe tener value EXACTO -->
   <label><input type="checkbox" name="entry.1245624590" value="Papel de baño"> Papel de baño</label>
-  <label><input type="checkbox" name="entry.1245624590" value="Gel antibacterial"> Gel antibacterial</label>
-  <label><input type="checkbox" name="entry.1245624590" value="Jabón"> Jabón</label>
+  <label><input type="checkbox" name="entry.1245624590" value="Gel Antibacterial"> Gel Antibacterial</label>
+  <label><input type="checkbox" name="entry.1245624590" value="Jabon"> Jabon</label>
 </div>
 
 <div class="section-title">Observaciones</div>
@@ -136,20 +131,25 @@ onsubmit="enviado=true;">
 
 </form>
 
-<iframe name="hidden_iframe" style="display:none;"></iframe>
-
 </div>
 
 <script>
-let enviado = false;
+document.getElementById("miFormulario").addEventListener("submit", function(e){
+  e.preventDefault();
 
-document.querySelector("form").addEventListener("submit", function(){
-  setTimeout(()=>{
-    if(enviado){
-      alert("✅ Formulario enviado correctamente");
-      document.querySelector("form").reset();
-    }
-  },1000);
+  const form = this;
+  const data = new FormData(form);
+
+  fetch("https://docs.google.com/forms/d/e/1FAIpQLSeXetqFhJncAIbs4fgoo1uZqz88nVw-VsCSN0fah9bBCwIQOw/formResponse", {
+    method: "POST",
+    mode: "no-cors",
+    body: data
+  }).then(() => {
+    alert("✅ Formulario enviado correctamente");
+    form.reset();
+  }).catch(() => {
+    alert("❌ Error al enviar");
+  });
 });
 </script>
 
