@@ -5,78 +5,183 @@
 <title>Formulario Cierre de Circuito</title>
 
 <style>
+*{
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
 body{
   margin:0;
   background: linear-gradient(135deg, #4facfe, #43e97b);
-  font-family: Arial;
-  display:flex;
-  justify-content:center;
-  align-items:center;
   min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:15px;
+}
+
+.container{
+  width:100%;
+  max-width:520px;
+}
+
+h2{
+  text-align:center;
+  color:#fff;
+  margin-bottom:15px;
 }
 
 form{
-  background:#fff;
-  padding:25px;
-  border-radius:15px;
+  background:#ffffff;
+  padding:25px 20px;
+  border-radius:18px;
+  box-shadow:0 15px 35px rgba(0,0,0,0.2);
   width:100%;
-  max-width:500px;
 }
 
-input, select, textarea{
+.section-title{
+  margin-top:20px;
+  font-weight:600;
+  font-size:15px;
+  border-bottom:2px solid #f1f1f1;
+  padding-bottom:6px;
+  color:#333;
+}
+
+label{
+  display:block;
+  margin-top:14px;
+  font-size:14px;
+  color:#444;
+}
+
+select,
+input,
+textarea{
   width:100%;
+  padding:11px;
+  margin-top:6px;
+  border-radius:10px;
+  border:1px solid #ddd;
+  font-size:14px;
+  transition:0.2s;
+}
+
+select:focus,
+input:focus,
+textarea:focus{
+  border-color:#2c7be5;
+  outline:none;
+  box-shadow:0 0 0 2px rgba(44,123,229,0.2);
+}
+
+.checkbox-grid{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:10px;
   margin-top:10px;
+}
+
+.checkbox-grid label{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  background:#f8f9fa;
   padding:10px;
-  border-radius:8px;
-  border:1px solid #ccc;
+  border-radius:10px;
+  border:1px solid #eee;
+  font-size:14px;
+  cursor:pointer;
+  transition:0.2s;
+}
+
+.checkbox-grid label:hover{
+  background:#eef4ff;
 }
 
 button{
-  margin-top:20px;
-  padding:12px;
   width:100%;
-  background:#2c7be5;
-  color:#fff;
+  margin-top:25px;
+  padding:13px;
+  background: linear-gradient(135deg, #2c7be5, #00c6ff);
+  color:white;
   border:none;
-  border-radius:10px;
+  border-radius:12px;
+  font-size:15px;
+  font-weight:600;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+button:hover{
+  transform:translateY(-1px);
+  box-shadow:0 8px 20px rgba(0,0,0,0.2);
+}
+
+@media (max-width:480px){
+
+  form{
+    padding:20px 15px;
+  }
+
+  .checkbox-grid{
+    grid-template-columns: 1fr;
+  }
+
+  h2{
+    font-size:20px;
+  }
+
 }
 </style>
 </head>
 
 <body>
 
+<div class="container">
+
+<h2>🚍 Cierre de Circuito</h2>
+
 <form id="formulario">
 
-<h3>🚍 Cierre de Circuito</h3>
+<div class="section-title">Datos Generales</div>
 
-<label>Cierre</label>
-<select name="entry.2037866813">
-  <option>Hidalgo</option>
-  <option>Reclusorio Norte</option>
-  <option>El Charco</option>
+<label>Cierre de Circuito</label>
+<select name="entry.2037866813" required>
+  <option value="">Seleccionar</option>
+  <option value="Hidalgo">Hidalgo</option>
+  <option value="Reclusorio Norte">Reclusorio Norte</option>
+  <option value="El Charco">El Charco</option>
 </select>
 
 <label>Horario</label>
-<select name="entry.1566385644">
-  <option>Matutino</option>
-  <option>Vespertino</option>
-  <option>Nocturno</option>
+<select name="entry.1566385644" required>
+  <option value="">Seleccionar</option>
+  <option value="Matutino">Matutino</option>
+  <option value="Vespertino">Vespertino</option>
+  <option value="Nocturno">Nocturno</option>
 </select>
 
 <label>Trabajador</label>
-<input name="entry.1857890296">
+<input type="text" name="entry.1857890296" required>
 
-<label>Insumos</label>
-<label><input type="checkbox" name="entry.1245624590" value="Papel de baño"> Papel de baño</label>
-<label><input type="checkbox" name="entry.1245624590" value="Gel Antibacterial"> Gel Antibacterial</label>
-<label><input type="checkbox" name="entry.1245624590" value="Jabon"> Jabon</label>
+<div class="section-title">Insumos</div>
 
-<label>Observaciones</label>
+<div class="checkbox-grid">
+  <label><input type="checkbox" name="entry.1245624590" value="Papel de baño"> Papel de baño</label>
+  <label><input type="checkbox" name="entry.1245624590" value="Gel Antibacterial"> Gel Antibacterial</label>
+  <label><input type="checkbox" name="entry.1245624590" value="Jabon"> Jabon</label>
+</div>
+
+<div class="section-title">Observaciones</div>
+
 <textarea name="entry.1928307145"></textarea>
 
 <button type="submit">Enviar</button>
 
 </form>
+
+</div>
 
 <script>
 document.getElementById("formulario").addEventListener("submit", function(e){
@@ -90,7 +195,7 @@ document.getElementById("formulario").addEventListener("submit", function(e){
     body: data
   })
   .then(() => {
-    alert("✅ Datos guardados en Google Sheets");
+    alert("✅ Datos guardados correctamente");
     this.reset();
   })
   .catch(() => {
