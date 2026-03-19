@@ -2,48 +2,44 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Formulario Cierre de Circuito - Saniprof</title>
-<link rel="stylesheet" href="style.css">
+<title>Formulario Cierre de Circuito</title>
 </head>
 <body>
 
-<h2>Formulario Cierre de Circuito - Saniprof</h2>
+<h2>Formulario Cierre de Circuito</h2>
 
-<form id="formulario">
+<form action="https://docs.google.com/forms/d/e/1FAIpQLSeXetqFhJncAIbs4fgoo1uZqz88nVw-VsCSN0fah9bBCwIQOw/formResponse" method="POST" target="hidden_iframe">
 
-<label>Cierre de Circuito</label>
-<select name="cierre" required>
-  <option value="">Seleccionar</option>
+<label>Cierre</label>
+<select name="entry.2037866813" required>
   <option>Completado</option>
   <option>Incompleto</option>
   <option>En proceso</option>
 </select>
 
 <label>Horario</label>
-<select name="horario" required>
-  <option value="">Seleccionar</option>
+<select name="entry.1566385644" required>
   <option>Matutino</option>
   <option>Vespertino</option>
   <option>Nocturno</option>
 </select>
 
-<label>Nombre del trabajador</label>
-<input type="text" name="trabajador" required>
+<label>Trabajador</label>
+<input type="text" name="entry.1857890296" required>
 
-<h3>Insumos Dejados</h3>
-<label><input type="checkbox" name="insumos" value="Papel de baño"> Papel de baño</label>
-<label><input type="checkbox" name="insumos" value="Jabón"> Jabón</label>
-<label><input type="checkbox" name="insumos" value="Gel antibacterial"> Gel antibacterial</label>
+<h3>Insumos</h3>
+<label><input type="checkbox" name="entry.1245624590" value="Papel de baño"> Papel de baño</label>
+<label><input type="checkbox" name="entry.1245624590" value="Gel Antibacterial"> Gel antibacterial</label>
+<label><input type="checkbox" name="entry.1245624590" value="Jabon"> Jabón</label>
 
 <h3>Observaciones</h3>
-<textarea name="observaciones"></textarea>
-
-<h3>Subir Foto</h3>
-<input type="file" id="foto" accept="image/*">
+<textarea name="entry.1928307145"></textarea>
 
 <button type="submit">Enviar</button>
+
 </form>
 
-<script src="script.js"></script>
+<iframe name="hidden_iframe" style="display:none;"></iframe>
+
 </body>
 </html>
